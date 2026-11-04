@@ -36,7 +36,7 @@ export default function HomePage() {
           <div className="hero-visual">
             <div className="visual-card">
               <img
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1000&q=80"
+                src="/gurgaon_coaching_teacher.jpeg"
                 alt="Tutor with students"
               />
             </div>
