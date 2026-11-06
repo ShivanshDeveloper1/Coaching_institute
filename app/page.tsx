@@ -1,11 +1,18 @@
 import Link from "next/link";
 import { courses, stats } from "./site-data";
 import HeroLearnerSection from "@/components/(Homepage)/HeroLearnerSection";
+import AcademicFoundationsSection from "@/components/(Homepage)/AcademicFoundationsSection";
 
 export default function HomePage() {
   return (
     <>
     <HeroLearnerSection />
+
+    <AcademicFoundationsSection />
+
+
+
+
       <section className="hero-section">
         <div className="container hero-row">
           <div className="hero-copy">
@@ -75,6 +82,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
 
       <section className="container section-space story-section">
         <div className="story-visual object-obtain">
