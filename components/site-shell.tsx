@@ -13,11 +13,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <div className="page-shell">
       <header className="topbar">
         <div className="container nav-wrap">
-          <Link href="/" className="brand" aria-label="Concept In Solution home">
+          <Link href="/" className="brand" aria-label="ConceptnSolution home">
             <span className="brand-mark">C</span>
             <span>
-              Concept In<br />
-              Solution
+              ConceptNSolution
             </span>
           </Link>
 
@@ -86,7 +85,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           </div>
         </div>
         <div className="container footer-bottom">
-          <span>© 2025 Concept In Solution</span>
+          <span>© 2025 ConceptnSolution</span>
           <span>Designed for modern learning</span>
         </div>
       </footer>

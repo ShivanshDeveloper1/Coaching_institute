@@ -3,7 +3,7 @@ import "./globals.css";
 import { SiteShell } from "../components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Concept In Solution | Coaching Institute",
+  title: "ConceptnSolution | Coaching Institute",
   description: "Modern coaching institute website for school preparation, foundation courses, and JEE/NEET guidance.",
 };
 

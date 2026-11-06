@@ -1,16 +1,18 @@
 import Link from "next/link";
 import { courses, stats } from "./site-data";
+import HeroLearnerSection from "@/components/(Homepage)/HeroLearnerSection";
 
 export default function HomePage() {
   return (
     <>
+    <HeroLearnerSection />
       <section className="hero-section">
         <div className="container hero-row">
           <div className="hero-copy">
             <p className="eyebrow hero-eyebrow">Coaching institute in Gurugram</p>
             <h1>Build stronger futures with expert guidance.</h1>
             <p className="hero-text">
-              From school excellence to JEE and NEET preparation, Concept In Solution helps students
+              From school excellence to JEE and NEET preparation, ConceptnSolution helps students
               learn with confidence, clarity, and discipline.
             </p>
 
@@ -75,9 +77,9 @@ export default function HomePage() {
       </section>
 
       <section className="container section-space story-section">
-        <div className="story-visual">
+        <div className="story-visual object-obtain">
           <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+            src="/result/result-2.jpeg"
             alt="Academic team"
           />
         </div>
@@ -86,7 +88,7 @@ export default function HomePage() {
           <p className="eyebrow">Who we are</p>
           <h2>Comprehensive support for business and academic excellence.</h2>
           <p>
-            Concept In Solution is a coaching institute committed to making learning more effective,
+            ConceptnSolution is a coaching institute committed to making learning more effective,
             structured, and inspiring for students preparing for school and entrance exams.
           </p>
           <div className="story-metrics">
@@ -188,7 +190,7 @@ export default function HomePage() {
               <input
                 id="name"
                 type="text"
-                placeholder="John Doe"
+                placeholder="Enter Your Name"
                 className="w-full rounded-xl border border-white/20 bg-white/10 px-4 py-3.5 text-base text-white placeholder:text-white/40 backdrop-blur-sm transition-all duration-200 focus:border-[#a8f0b0] focus:bg-white/20 focus:outline-none focus:ring-4 focus:ring-[#a8f0b0]/20"
               />
             </div>

@@ -125,7 +125,7 @@ export const mockUsers: FirestoreUser[] = [
   {
     uid: "admin-demo-user",
     email: "admin@conceptinsolution.com",
-    displayName: "Concept In Solution Admin",
+    displayName: "ConceptnSolution Admin",
     photoURL: "",
     role: "admin",
     createdAt: new Date().toISOString(),
@@ -194,7 +194,7 @@ export const mockCourseAccess: FirestoreCourseAccess[] = [
 ];
 
 export const mockSiteSettings: FirestoreSiteSettings = {
-  instituteName: "Concept In Solution",
+  instituteName: "ConceptnSolution",
   teacherName: "Dheeraj Sir",
   experience: "15+ Years",
   location: "Gurugram, Haryana",

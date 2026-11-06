@@ -13,7 +13,7 @@ export default function AboutPage() {
       <section className="story-grid">
         <div className="story-image-card">
           <img
-            src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80"
+            src="/result/result-1.jpeg"
             alt="Mentor and students"
           />
         </div>
@@ -22,7 +22,7 @@ export default function AboutPage() {
           <p className="eyebrow accent">Dheeraj Sir</p>
           <h2>15+ years of teaching excellence</h2>
           <p>
-            Concept In Solution is built around the vision of providing high-quality education for
+            ConceptnSolution is built around the vision of providing high-quality education for
             students who want to balance board excellence with competitive exam preparation.
           </p>
           <p>
