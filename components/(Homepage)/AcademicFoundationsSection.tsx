@@ -8,7 +8,7 @@ export default function AcademicFoundationsSection() {
     <section className="relative min-h-screen w-full bg-[var(--bg)] text-[var(--ink)] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden selection:bg-[var(--green-300)] selection:text-[var(--green-900)]">
       
       {/* ================= HEADER SECTION ================= */}
-      <div className="max-w-3xl mx-auto text-center flex flex-col items-center">
+      <div className="max-w-6xl mx-auto text-center flex flex-col items-center">
         <motion.h1
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}

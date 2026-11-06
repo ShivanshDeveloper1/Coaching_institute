@@ -2,6 +2,7 @@ import Link from "next/link";
 import { courses, stats } from "./site-data";
 import HeroLearnerSection from "@/components/(Homepage)/HeroLearnerSection";
 import AcademicFoundationsSection from "@/components/(Homepage)/AcademicFoundationsSection";
+import TestimonialsSection from "@/components/(Homepage)/Reviews";
 
 export default function HomePage() {
   return (
@@ -148,6 +149,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <TestimonialsSection />
 
 <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
   <div className="relative overflow-hidden rounded-[32px] bg-[#0c3d3d] p-6 sm:p-10 md:p-14 lg:p-16 text-white shadow-2xl transition-all duration-300">
