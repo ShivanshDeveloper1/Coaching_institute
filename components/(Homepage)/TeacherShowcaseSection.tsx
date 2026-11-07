@@ -29,14 +29,13 @@ export default function TeacherShowcaseSection() {
                 Coaching institute in Gurugram
               </span>
 
-              <h2 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-white max-w-2xl">
-                Best Teacher in the.
-              </h2>
+          <h2 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.05] text-white max-w-2xl">
+  Learn Better. Achieve Bigger.
+</h2>
 
-              <p className="mt-5 text-base sm:text-lg text-white/80 leading-relaxed max-w-xl">
-                From school excellence to JEE and NEET preparation, ConceptnSolution helps students
-                learn with confidence, clarity, and discipline.
-              </p>
+<p className="mt-5 text-base sm:text-lg text-white/80 leading-relaxed max-w-xl">
+  From school academics to JEE and NEET preparation, ConceptnSolution provides expert guidance, personalised learning, and the right direction to help every student succeed.
+</p>
             </div>
 
             {/* Action Buttons */}
