@@ -161,15 +161,15 @@ export default function HeroLearnerSection() {
               delay: 0.2,
             }}
             whileHover={{ scale: 1.04, rotate: -2 }}
-            className="absolute left-[4%] sm:left-[6%] md:left-[5%] bottom-[8%] sm:bottom-[10%] w-[125px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
+            className="absolute left-[2%] sm:left-[6%] md:left-[5%] bottom-[6%] sm:bottom-[10%] w-[110px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
           >
             {/* Floating Smiley Sticker */}
             <motion.div
               animate={{ y: [0, -6, 0], rotate: [-4, 6, -4] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-9 -right-5 z-20 w-12 h-12 sm:w-14 sm:h-14 bg-[#F6D5C1] rounded-full flex items-center justify-center shadow-sm border-2 border-[#F7F4EB]"
+              className="absolute -top-7 -right-3 sm:-top-9 sm:-right-5 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-[#F6D5C1] rounded-full flex items-center justify-center shadow-sm border-2 border-[#F7F4EB]"
             >
-              <svg viewBox="0 0 36 36" className="w-7 h-7 text-[#14281D]">
+              <svg viewBox="0 0 36 36" className="w-5 h-5 sm:w-7 sm:h-7 text-[#14281D]">
                 <circle cx="13" cy="14" r="2.2" fill="currentColor" />
                 <circle cx="23" cy="14" r="2.2" fill="currentColor" />
                 <path
@@ -200,10 +200,10 @@ export default function HeroLearnerSection() {
               delay: 0.1,
             }}
             whileHover={{ scale: 1.02, rotate: -1.5 }}
-            className="absolute left-1/2 -translate-x-1/2 top-[6%] sm:top-[4%] w-[210px] sm:w-[270px] md:w-[320px] aspect-[4/4.8] rounded-3xl shadow-2xl border-[6px] border-[#F7F4EB] overflow-hidden bg-[#D5CFC0]"
+            className="absolute left-1/2 -translate-x-1/2 top-[6%] sm:top-[4%] w-[190px] sm:w-[270px] md:w-[320px] aspect-[4/4.8] rounded-3xl shadow-2xl border-[5px] sm:border-[6px] border-[#F7F4EB] overflow-hidden bg-[#D5CFC0]"
           >
             <img
-              src="gurgaon_coaching_teacher.jpeg"
+              src="/gurgaon_coaching_teacher.jpeg"
               alt="Student holding books in library"
               className="w-full h-full object-cover"
             />
@@ -220,7 +220,7 @@ export default function HeroLearnerSection() {
               delay: 0.3,
             }}
             whileHover={{ scale: 1.04, rotate: 0 }}
-            className="absolute right-[4%] sm:right-[6%] md:right-[6%] top-[14%] sm:top-[16%] w-[125px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
+            className="absolute right-[2%] sm:right-[6%] md:right-[6%] top-[12%] sm:top-[16%] w-[110px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
           >
             {/* Floating Green Clover/Blob Shape Behind Top-Left Corner */}
             <motion.div

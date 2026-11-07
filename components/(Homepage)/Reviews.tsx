@@ -46,7 +46,7 @@ export default function TestimonialsSection() {
   const activeTestimonial = testimonialsData[currentIndex];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center bg-[#f8faf8] px-4 py-12 md:px-12 md:py-24 overflow-hidden">
+    <section className="relative w-full flex items-center justify-center bg-[#f8faf8] px-4 py-16 sm:py-20 lg:py-24 md:px-12 overflow-hidden">
       {/* Background Subtle Grid Effect matching the layout */}
       <div 
         className="absolute inset-0 opacity-[0.06] pointer-events-none"

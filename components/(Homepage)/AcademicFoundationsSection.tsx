@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function AcademicFoundationsSection() {
   return (
-    <section className="relative min-h-screen w-full bg-[var(--bg)] text-[var(--ink)] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-16 overflow-hidden selection:bg-[var(--green-300)] selection:text-[var(--green-900)]">
+    <section className="relative w-full bg-[var(--bg)] text-[var(--ink)] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 overflow-hidden selection:bg-[var(--green-300)] selection:text-[var(--green-900)]">
       
       {/* ================= HEADER SECTION ================= */}
       <div className="max-w-6xl mx-auto text-center flex flex-col items-center">
