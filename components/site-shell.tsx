@@ -47,7 +47,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             <div className="brand footer-brand">
               <span className="brand-mark">C</span>
               <span>
-                Concept In<br />
+                ConceptN<br />
                 Solution
               </span>
             </div>
