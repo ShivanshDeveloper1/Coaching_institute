@@ -1,8 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { NavAuthSection } from "./NavAuthSection";
 
 export function SiteShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin");
+
+  if (isAdmin) {
+    return <>{children}</>;
+  }
+
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },

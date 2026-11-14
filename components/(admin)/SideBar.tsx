@@ -44,7 +44,7 @@ const SideBar = () => {
       {/* Header */}
       <div className="border-b p-4 flex items-center justify-center bg-white sticky top-0 z-10">
         <Image
-          src="/logo.jpeg"
+          src="/logo-11.png"
           alt="Logo"
           height={40}
           width={40}
