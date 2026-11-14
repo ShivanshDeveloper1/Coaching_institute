@@ -17,8 +17,8 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <div className="container nav-wrap">
           <Link href="/" className="brand" aria-label="ConceptnSolution home">
             <img src={'/logo-11.png'}  className="w-10 h-10 rounded-full"/>
-            <span>
-              ConceptnSolution
+            <span className="max-w-xl">
+              ConceptNSolution
             </span>
           </Link>
 
@@ -40,10 +40,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
         <div className="container footer-grid">
           <div>
             <div className="brand footer-brand">
-              <span className="brand-mark">C</span>
+            <img src={'/logo-11.png'}  className="w-10 h-10 rounded-full"/>
               <span>
-                ConceptN<br />
-                Solution
+                ConceptNSolution
               </span>
             </div>
             <p className="muted">
