@@ -1298,3 +1298,14 @@
     height: 360px;
   }
 }
+
+/* Admin panel design tokens (used only by /admin quiz builder: bg-primary, text-muted-foreground, border-border, etc.). Public pages do not use these classes. */
+@theme {
+  --color-primary: #dc2626;
+  --color-primary-foreground: #ffffff;
+  --color-foreground: #111827;
+  --color-background: #ffffff;
+  --color-muted: #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-border: #e5e7eb;
+}

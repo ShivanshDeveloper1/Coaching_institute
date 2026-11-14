@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { NavAuthSection } from "./NavAuthSection";
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const navItems = [
@@ -7,6 +8,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
     { href: "/about", label: "About" },
     { href: "/courses", label: "Courses" },
     { href: "/contact", label: "Contact" },
+    { href: "/test-series", label: "Test-Series" },
   ];
 
   return (
@@ -14,9 +16,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <header className="topbar">
         <div className="container nav-wrap">
           <Link href="/" className="brand" aria-label="ConceptnSolution home">
-            <span className="brand-mark">C</span>
+            <img src={'/logo-11.png'}  className="w-10 h-10 rounded-full"/>
             <span>
-              ConceptNSolution
+              ConceptnSolution
             </span>
           </Link>
 
@@ -28,14 +30,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
 
-          <div className="nav-actions">
-            <Link href="/login" className="btn btn-secondary btn-small">
-              Login
-            </Link>
-            <Link href="/courses" className="btn btn-primary btn-small">
-              Enquire now
-            </Link>
-          </div>
+          <NavAuthSection />
         </div>
       </header>
 

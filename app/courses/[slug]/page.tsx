@@ -311,7 +311,7 @@ export default async function CourseDetailPage({
                       href="/contact"
                       className="w-full inline-flex items-center justify-center px-6 py-3.5 rounded-2xl font-bold text-sm sm:text-base border-2 border-[#0c3d3d]/20 text-[#0c3d3d] bg-white hover:bg-[#f0f4f2] transition-colors"
                     >
-                      Enquire now
+                      Con
                     </Link>
                   </div>
                 </div>

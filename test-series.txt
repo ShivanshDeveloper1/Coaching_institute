@@ -1,0 +1,500 @@
+================================================================================
+TEST SERIES SYSTEM - COMPLETE MASTER GUIDE & ARCHITECTURE MANUAL
+================================================================================
+Project: ConceptnSolution Coaching Institute Web Application
+Stack: Next.js 16 (App Router), React 19, Firebase Firestore, Tailwind CSS, KaTeX
+Last Updated: 2026-11-13
+
+--------------------------------------------------------------------------------
+TABLE OF CONTENTS:
+--------------------------------------------------------------------------------
+1. QUICK START: LIVE URLS TO TEST IN YOUR BROWSER
+2. WHY EVERY FILE STANDS (FILE-BY-FILE ARCHITECTURE DIRECTORY)
+3. HOW THE QUIZ SYSTEM WORKS (STUDENT CBT WORKFLOW)
+4. HOW TO CREATE AND UPLOAD QUESTIONS (3 EASY WAYS)
+5. WHERE THE DATA IS STORED & HOW TO CONNECT FIREBASE FIRESTORE
+6. HOW SCORING AND AUTO-GRADING WORK
+7. RECOMMENDED FUTURE IMPROVEMENTS & ROADMAP
+================================================================================
+
+
+================================================================================
+1. QUICK START: LIVE URLS TO TEST IN YOUR BROWSER
+================================================================================
+When the development server is running (`npm run dev`), open your browser to:
+
+STUDENT-FACING PAGES:
+---------------------
+* Browse All Tests:
+  http://localhost:3000/test-series
+  (Filter by NEET, JEE, Foundation, and Target Class)
+
+* Test Details & Instructions:
+  http://localhost:3000/test-series/quiz_neet_mock_01
+  (View duration, marking rules, syllabus, and "I am ready to Begin" button)
+
+* Computer-Based Test (CBT) Engine:
+  http://localhost:3000/test-series/quiz_neet_mock_01/quiz
+  (Live exam screen with timer, question palette, and Clear Response button)
+
+* Test Results & NCERT Solutions:
+  http://localhost:3000/test-series/quiz_neet_mock_01/result
+  (Instant score, accuracy %, time spent, and detailed question solutions)
+
+ADMIN-FACING PAGES:
+-------------------
+* Visual Quiz Builder (Step-by-step test creator):
+  http://localhost:3000/admin/test-series
+  (Set exam type, title, duration, add questions with options and explanations)
+
+* Edit Live Test Series (Update questions or freeze tests):
+  http://localhost:3000/admin/edittestSeries
+  (Select any quiz from the sidebar, modify text, upload images, save)
+
+* Direct Database Bulk JSON Injector:
+  http://localhost:3000/admin/addbulk
+  (Paste an entire JSON array of questions/tests to publish instantly)
+
+
+================================================================================
+2. WHY EVERY FILE STANDS (FILE-BY-FILE ARCHITECTURE DIRECTORY)
+================================================================================
+
+A. PUBLIC STUDENT-FACING ROUTES (app/(testSeries)/):
+---------------------------------------------------
+1. `app/(testSeries)/layout.tsx`:
+   - WHY IT STANDS: Wraps all test series sub-pages in `<AuthProvider>` and
+     `<QuizProvider>`. Ensures student authentication status and quiz data
+     are shared smoothly across pages without reloading.
+
+2. `app/(testSeries)/test-series/page.tsx`:
+   - WHY IT STANDS: Main Test Series Catalog Hub. Displays hero banner, test
+     counts, and mounts `<TestSeries />`. (Leaderboard is safely decoupled
+     here with a TODO for the separate leaderboard phase).
+
+3. `app/(testSeries)/test-series/[id]/page.tsx`:
+   - WHY IT STANDS: Pre-exam instruction screen. Displays duration, marks,
+     rules, syllabus, and verifies student login before starting.
+
+4. `app/(testSeries)/test-series/[id]/quiz/page.tsx`:
+   - WHY IT STANDS: CBT Exam session container. Checks if test data is loaded
+     and mounts `<QuizEngine />`.
+
+5. `app/(testSeries)/test-series/[id]/result/page.tsx`:
+   - WHY IT STANDS: Result container that mounts `<ResultClient testId={id} />`.
+
+B. REUSABLE TEST SERIES COMPONENTS (components/):
+------------------------------------------------
+6. `components/(testseries)/testSeries.tsx`:
+   - WHY IT STANDS: Renders the responsive quiz cards grid. Handles filtering
+     by Exam Type (NEET, JEE, Foundation) and Class Level (Class 9-12, Dropper).
+
+7. `components/(testseries)/QuizEngine.tsx`:
+   - WHY IT STANDS: The actual CBT testing software. Contains the countdown
+     timer, question switcher, radio options, question palette (green for
+     answered, gray for unvisited), and the "Clear Response" button.
+
+8. `components/(testseries)/LatexText.tsx`:
+   - WHY IT STANDS: Mathematical and scientific formula renderer. Parses
+     equations like $H_2SO_4$, $\Delta G = \Delta H - T\Delta S$, $\frac{a}{b}$,
+     or $\int x^2 dx$ and renders them using KaTeX.
+
+9. `components/(Result)/ResultClient.tsx`:
+   - WHY IT STANDS: The post-exam analytics dashboard. Shows student score,
+     percentage, accuracy %, questions attempted/skipped, and question-by-question
+     NCERT solutions with filter tabs (All, Correct, Incorrect, Skipped).
+
+C. STATE MANAGEMENT & BACKEND SERVICES:
+---------------------------------------
+10. `types/quiz.ts`:
+    - WHY IT STANDS: Single source of truth for all Test Series data structures
+      (`Question`, `Quiz`, `QuizAttempt`, `QuizResultSummary`). Aligned with Firestore.
+
+11. `context/QuizContext.tsx`:
+    - WHY IT STANDS: React Context that manages active quiz details and fetches
+      from API routes.
+
+12. `context/AuthContext.tsx`:
+    - WHY IT STANDS: Firebase Auth provider. Handles student login via Google,
+      and provides a demo student fallback session (`student-demo-user`) so tests
+      can be taken locally even without active internet/Firebase keys.
+
+13. `lib/firebase/quiz-service.ts`:
+    - WHY IT STANDS: Server-side business logic. Reads and writes quizzes to
+      Firestore (`adminDb`). Contains built-in fallback mock quizzes for NEET,
+      JEE, and Foundation when Firestore is empty.
+
+D. API ROUTES (app/api/):
+-------------------------
+14. `app/api/quiz/route.ts`:
+    - WHY IT STANDS: GET endpoint returning the catalog of published tests.
+
+15. `app/api/quiz/[id]/route.ts`:
+    - WHY IT STANDS: GET endpoint returning full details, questions, and options
+      for a single test.
+
+16. `app/api/quiz/[id]/submit/route.ts`:
+    - WHY IT STANDS: POST endpoint that receives student answers, evaluates
+      them against the answer key with NO NEGATIVE MARKING (+4 correct, 0 wrong),
+      and saves the attempt in Firestore.
+
+17. `app/api/admin/upload-quiz/route.ts`:
+    - WHY IT STANDS: POST endpoint for the visual admin quiz builder.
+
+18. `app/api/admin/bulk-upload-quiz/route.ts`:
+    - WHY IT STANDS: POST endpoint for bulk JSON test injection.
+
+19. `app/api/admin/edit-quizzes/route.ts` & `[id]/route.ts`:
+    - WHY IT STANDS: CRUD endpoints to list, update, and delete tests in admin.
+
+20. `app/api/admin/upload-image/route.ts`:
+    - WHY IT STANDS: Image upload endpoint for attaching diagram photos to questions.
+
+E. ADMIN DASHBOARD PAGES (app/admin/):
+--------------------------------------
+21. `app/admin/test-series/page.tsx`:
+    - WHY IT STANDS: Mounts the modular `CreateQuizPage` component.
+
+22. `app/admin/edittestSeries/page.tsx`:
+    - WHY IT STANDS: Admin control center to edit existing test questions,
+      freeze/unfreeze tests (hide from students), or attach diagrams.
+
+23. `app/admin/addbulk/page.tsx`:
+    - WHY IT STANDS: Fast JSON code terminal for bulk-uploading tests.
+
+
+================================================================================
+3. HOW THE QUIZ SYSTEM WORKS (STUDENT CBT WORKFLOW)
+================================================================================
+Here is exactly what happens when a student takes a test:
+
+Step 1: Student visits `/test-series`
+  - The page calls `GET /api/quiz`.
+  - Quizzes are listed as cards showing Title, Duration, Exam Category, and Class.
+
+Step 2: Student clicks "Start Test Now"
+  - Opens `/test-series/[id]`.
+  - Shows test instructions, total marks, duration, and rules.
+  - Student clicks "I am ready to Begin".
+
+Step 3: CBT Exam Environment launches at `/test-series/[id]/quiz`
+  - Timer starts counting down from test duration (e.g., 180 minutes).
+  - Student clicks Option A, B, C, or D.
+  - If student wants to cancel/unselect their answer, they click "Clear Response".
+  - The Question Palette on the right turns GREEN for answered questions.
+  - Student clicks "Save & Next" to move through questions.
+  - Anti-cheat protection: Auto-submits if the tab is closed or switched.
+
+Step 4: Student clicks "Submit Test"
+  - Answers are sent via POST to `/api/quiz/[id]/submit`.
+  - Server grades each question:
+    * Correct answer: +4 marks
+    * Incorrect answer: 0 marks (NO NEGATIVE MARKING)
+    * Skipped question: 0 marks
+  - Saves the record in Firestore collection `quiz_attempts`.
+
+Step 5: Instant Performance Report at `/test-series/[id]/result`
+  - Scorecard displays: Score, Total Marks, Percentage, Accuracy %, Time Taken.
+  - Filter tabs allow reviewing: All, Correct (+4), Incorrect (0), or Skipped.
+  - Every question displays the full step-by-step explanation with math formulas.
+
+
+================================================================================
+4. HOW TO CREATE AND UPLOAD QUESTIONS (3 EASY WAYS)
+================================================================================
+
+METHOD 1: USING THE VISUAL ADMIN BUILDER (Recommended for single tests)
+----------------------------------------------------------------------
+1. Navigate to: `http://localhost:3000/admin/test-series`
+2. Fill in Quiz Details:
+   - Exam Type: Select "NEET", "JEE", "Class 11", "Class 12", etc.
+   - Title: e.g. "Thermodynamics & Equilibrium Mock Test 01"
+   - Duration: e.g. 60 (minutes)
+   - Difficulty: Easy / Moderate / Hard
+   - Instructions: Add rules for the exam.
+3. Click "Confirm Details & Add Questions".
+4. Add Questions one by one:
+   - Subject: e.g. "Chemistry"
+   - Question Prompt: Supports LaTeX formulas like `\(H_2O\)` or `$x^2$`
+   - Upload diagram/image (optional)
+   - Options A, B, C, D (Type text or click math symbols toolbar)
+   - Select the radio button for the Correct Answer (A, B, C, or D)
+   - Provide Answer Explanation
+5. Click "Add Question to Test".
+6. When done with all questions, click "Publish Test Series to Database".
+   It will instantly appear in the student catalog at `/test-series`!
+
+METHOD 2: USING BULK JSON UPLOAD (Fastest for multiple tests)
+------------------------------------------------------------
+1. Navigate to: `http://localhost:3000/admin/addbulk`
+2. Click "Insert Template Sample" or paste your JSON array:
+   Example JSON format:
+   [
+     {
+       "title": "NEET Biology Cellular Reproduction Mock",
+       "examType": "NEET",
+       "classLevel": "Class 11",
+       "duration": 45,
+       "difficulty": "moderate",
+       "questions": [
+         {
+           "subject": "Biology",
+           "question_text": "During which phase of meiosis does crossing over occur?",
+           "options": ["Pachytene", "Leptotene", "Zygotene", "Diplotene"],
+           "correct_answer": 0,
+           "explanation": "Crossing over occurs during the Pachytene stage of Prophase I."
+         }
+       ]
+     }
+   ]
+3. Click "Execute Bulk Upload Engine". All tests are published immediately!
+
+METHOD 3: USING EDIT TEST SERIES (For modifying live tests)
+----------------------------------------------------------
+1. Navigate to: `http://localhost:3000/admin/edittestSeries`
+2. Select any quiz from the left sidebar.
+3. Edit question prompts, options, explanations, or upload diagrams.
+4. Freeze Toggle: Check "Test is Frozen" if you want to temporarily hide
+   the test from students without deleting it.
+5. Click "Save Changes".
+
+
+================================================================================
+5. WHERE THE DATA IS STORED & HOW TO CONNECT FIREBASE FIRESTORE
+================================================================================
+
+HOW DATA IS ORGANIZED IN FIRESTORE:
+-----------------------------------
+The system uses two core Firestore collections:
+
+1. Collection: `quizzes`
+   - Document ID: e.g. `quiz_neet_mock_01`
+   - Fields:
+     * `title` (string)
+     * `examType` (string: "NEET", "JEE", "Foundation", etc.)
+     * `classLevel` (string: "Class 10", "Class 11", "Class 12", "Dropper")
+     * `duration` (number in minutes)
+     * `totalMarks` (number)
+     * `isPublished` (boolean)
+     * `isLocked` (boolean: true if admin froze the test)
+     * `markingScheme` (map: { correct: 4, incorrect: 0, unattempted: 0 })
+     * `questions` (array of question objects with options, correct answer, explanation)
+
+2. Collection: `quiz_attempts`
+   - Document ID: e.g. `attempt_quiz_neet_mock_01_1710345678901`
+   - Fields:
+     * `attemptId` (string)
+     * `quizId` (string)
+     * `quizTitle` (string)
+     * `userId` (string: student Firebase UID)
+     * `studentName` (string)
+     * `studentEmail` (string)
+     * `score` (number earned)
+     * `maxScore` (number possible)
+     * `accuracy` (number: percentage)
+     * `timeTakenSeconds` (number)
+     * `summary` (attempted, correct, incorrect, unattempted)
+     * `questionReview` (array of student answers vs correct answers)
+     * `submittedAt` (ISO timestamp)
+
+HOW LOCAL DEVELOPMENT VS REAL FIREBASE WORKS:
+---------------------------------------------
+* ZERO CONFIGURATION NEEDED FOR LOCAL TESTING:
+  If Firebase credentials are not yet set up in `.env.local`, the system
+  automatically uses built-in mock quizzes and in-memory storage. You will
+  NEVER see a crash or 500 error during local development!
+
+* CONNECTING TO REAL FIREBASE FIRESTORE IN PRODUCTION:
+  To store quizzes and attempts in your live Google Firebase project,
+  open your `.env.local` file and provide your Firebase service account keys:
+
+  ```env
+  # Firebase Client Web Config (from Firebase Console -> Project Settings -> General)
+  NEXT_PUBLIC_FIREBASE_API_KEY="AIzaSy..."
+  NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-app.firebaseapp.com"
+  NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-app-id"
+  NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-app.firebasestorage.app"
+  NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="123456789"
+  NEXT_PUBLIC_FIREBASE_APP_ID="1:123456789:web:abcdef"
+
+  # Firebase Admin SDK (from Firebase Console -> Project Settings -> Service Accounts -> Generate New Private Key)
+  FIREBASE_PROJECT_ID="your-app-id"
+  FIREBASE_CLIENT_EMAIL="firebase-adminsdk-xxxxx@your-app-id.iam.gserviceaccount.com"
+  FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASC...=\n-----END PRIVATE KEY-----\n"
+  ```
+  Once those keys are set, restart the dev server (`npm run dev`). Everything
+  will save directly to your live Google Cloud Firestore!
+
+
+================================================================================
+6. HOW SCORING AND AUTO-GRADING WORK
+================================================================================
+* Strict Rule Configured: **NO NEGATIVE MARKING**
+  - Correct Answer: **+4 Marks**
+  - Incorrect Answer: **0 Marks** (No deduction)
+  - Unattempted / Skipped Question: **0 Marks**
+* Total Score Formula: `Total Score = (Correct Count) * 4`
+* Accuracy Formula: `Accuracy = (Correct Count / Attempted Count) * 100%`
+
+
+================================================================================
+7. RECOMMENDED FUTURE IMPROVEMENTS & ROADMAP
+================================================================================
+Here are high-impact enhancements you can add in future phases:
+
+1. Phase: Leaderboard & Campus Rankings
+   - Rank students based on their highest score in each mock exam.
+   - Show weekly "Top Performers" on the home page and `/test-series`.
+
+2. Student Analytics & History Page:
+   - Create a `/dashboard/my-tests` page where students can review all their
+     past attempts and track improvements in speed and accuracy over time.
+
+3. PDF Question Paper & Solution Generator:
+   - Add a "Download Question Paper PDF" and "Download Solution Sheet PDF"
+     button on the test detail and result pages.
+
+4. Subject-wise Sectional Cutoffs:
+   - Group questions by Physics, Chemistry, and Mathematics/Biology with
+     individual subject timer warnings and sectional scores.
+
+================================================================================
+8. LIVE END-TO-END TEST LOG & AUDIT REPORT (2026-11-13)
+================================================================================
+We conducted an automated end-to-end run simulating:
+1. Admin creating a brand new quiz via the Admin Test Series flow.
+2. The quiz immediately reflecting in the student catalog.
+3. A student taking the test, answering questions (1 correct, 1 wrong).
+4. Auto-grading computing the final score (+4 / 0, verifying NO NEGATIVE MARKING).
+5. Result scorecard and NCERT solutions rendering properly.
+
+RESULTS:
+- Admin Quiz Creation: SUCCESS (Created Quiz ID: WKvxVS7rL2woq1diK6r1)
+- Catalog Listing: SUCCESS (HTTP 200)
+- Student CBT Screen: SUCCESS (HTTP 200)
+- Auto-Grading Calculation: SUCCESS (Score: 4/8, Accuracy: 50%, 0 marks deducted for wrong answers)
+- Result Analytics: SUCCESS (HTTP 200)
+- All Admin Pages (/admin/test-series, /admin/edittestSeries, /admin/addbulk): SUCCESS (HTTP 200)
+- Error Handling (Empty title: 400 Bad Request, Fake ID: 404 Not Found): SUCCESS
+
+PROBLEMS ENCOUNTERED & FIXED DURING TESTING:
+- Problem 1: Response format mismatch on GET /api/quiz/[id].
+  Resolution: API now spreads quiz properties so callers accessing either `res.title`
+  or `res.quiz.title` both work without null-pointer errors.
+- Problem 2: Submission payload key flexibility on POST /api/quiz/[id]/submit.
+  Resolution: API now accepts `responses`, `answers`, or `userAnswers` interchangeably,
+  and returns both `summary: { ... }` and top-level aliases (`totalQuestions`, `score`).
+
+================================================================================
+9. GOOGLE AUTHENTICATION & ADMIN PERMISSIONS SETUP (2026-11-14)
+================================================================================
+How to assign Admin Access:
+1. Open your `.env.local` file.
+2. Add your admin Gmail address(es) as a comma-separated list:
+   ADMIN_EMAILS=yourname@gmail.com,coadmin@gmail.com
+
+How it works:
+- When a user signs in with Google, `/api/auth/sync-user` checks if their email
+  matches `ADMIN_EMAILS` (or has `role: "admin"` in Firestore).
+- If authorized, their session gets `isAdmin: true` and `role: "admin"`.
+- If an unauthorized user attempts to open `/admin`, the `<AdminGuard>` stops
+  them and displays a `403 • Access Denied` screen with a button to return to
+  their Student Dashboard.
+- When logged in, the Navbar hides the "Login" button and shows an avatar circle
+  containing the first letter of the user's first name with a dropdown menu.
+- When students submit tests, their real Google name, email, and UID are saved
+  with the quiz attempt in Firestore (`quiz_attempts`).
+
+================================================================================
+10. TEST RESULTS DATABASE STORAGE & DASHBOARD LIFECYCLE (2026-11-14)
+================================================================================
+Here is the step-by-step lifecycle of how a student's test result is saved,
+stored in Firebase Firestore, and retrieved on the student dashboard:
+
+STEP 1: SUBMISSION TRIGGER
+- When the student clicks "Submit Test" (or the countdown timer runs out) in
+  `components/(testseries)/QuizEngine.tsx`, the CBT engine gathers:
+  * `userId`: Google Auth UID of the student (or fallback for demo tests)
+  * `studentName`: Display name from their Google profile
+  * `studentEmail`: Email from their Google profile
+  * `timeSpentSeconds`: Exact seconds taken to complete the exam
+  * `responses`: Map of question indices to selected answer options
+- Sends `POST /api/quiz/[id]/submit` with this payload.
+
+STEP 2: AUTO-GRADING & SCORE EVALUATION
+- In `app/api/quiz/[id]/submit/route.ts`:
+  * Fetches the official quiz questions from Firestore (or mock bank).
+  * Evaluates each answer against `correct_answer`.
+  * Enforces the rule: **NO NEGATIVE MARKING** (+4 for correct, 0 for incorrect/skipped).
+  * Calculates `score`, `percentage`, `accuracy`, and `summary` counts.
+  * Formats `questionReview` containing every question, user answer, correct answer,
+    and step-by-step NCERT formula explanations.
+  * Generates a unique document ID: `attempt_[quizId]_[timestamp]`.
+
+STEP 3: PERSISTING IN DATABASE
+- The evaluated record is saved to Firestore collection `quiz_attempts`
+  using `saveQuizAttemptInFirestore()` in `lib/firebase/quiz-service.ts`.
+- In production, it writes to `quiz_attempts/{attemptId}` via `adminDb`.
+- In local development without service account keys, it writes to the
+  in-memory store `mockQuizAttempts`, ensuring zero crashes during local work.
+
+STEP 4: DASHBOARD RETRIEVAL & EMPTY STATE
+- When visiting `/dashboard` (`app/dashboard/page.tsx`):
+  * The page calls `GET /api/user/attempts?userId={user.uid}`.
+  * **New User (0 attempts):** Displays an encouraging starting state:
+    "Start attempting tests to track your progress and get your performance report."
+    with a primary button directing the student to `/test-series`.
+  * **Returning User (1+ attempts):** Displays computed stats (Total Tests,
+    Average Score %, Average Accuracy %) and a chronological history of attempts
+    with exam badges, marks earned, time taken, and completion date.
+  * **Review Solutions Button:** Clicking "Review" on any past attempt links to
+    `/test-series/[id]/result?attemptId=[attemptId]`, which directly pulls the
+    saved `questionReview` from the database so the student can study solutions
+    at any time in the future.
+
+================================================================================
+11. DESIGN SYSTEM HARMONIZATION (2026-11-14)
+================================================================================
+The test series UI was harmonized with the project's official design system
+tokens (defined in `app/globals.css` lines 1-18). All harsh red gradients and
+inconsistent indigo/slate colors were replaced across the entire test journey.
+
+Design System Palette Used:
+- Background: `--bg: #f4efe7;` (soft warm paper)
+- Strong Background: `--bg-strong: #ece7df;`
+- Card Surface: `--surface: #ffffff;` (clean white)
+- Soft Surface: `--surface-soft: #f0f4f2;` (pale sage/mint)
+- Primary Text: `--ink: #172327;` (dark charcoal)
+- Secondary Text: `--ink-soft: #55656b;` (muted slate)
+- Primary Dark Green: `--green-900: #0c3d3d;`
+- Brand Forest Green: `--green-800: #0d4f4f;`
+- Accent Deep Teal: `--green-700: #1d5d53;`
+- Mint Accent: `--green-600: #88d89d;`
+- Light Mint Highlight: `--green-500: #a8f0b0;`
+- Pale Green Chip: `--green-300: #d8f7d4;`
+- Box Shadow: `--shadow: 0 22px 55px rgba(15, 35, 34, 0.12);`
+- Border Line: `--line: rgba(15, 41, 31, 0.12);`
+- Corner Radius: `--radius: 24px;`
+
+Updated Files:
+1. `app/(testSeries)/test-series/page.tsx`:
+   - Hero banner updated to deep forest gradient:
+     `bg-[linear-gradient(135deg,#0c3d3d_0%,#0d4f4f_35%,#1d5d53_100%)]`.
+   - Feature chips styled with mint accents and rounded borders.
+2. `components/(testseries)/testSeries.tsx`:
+   - Category filter pills styled with brand dark greens and soft borders.
+   - Test cards restyled into sleek white cards with `--radius: 24px`, subtle
+     borders, and forest green CTA action buttons (`bg-[#0c3d3d]`).
+3. `app/(testSeries)/test-series/[id]/page.tsx`:
+   - Exam instruction modal/card updated with warm paper background, clear
+     instruction numbering in `--green-700`, and a forest green "Start Test" CTA.
+4. `components/(testseries)/QuizEngine.tsx`:
+   - CBT interface updated with warm background, forest green countdown timer,
+     active option selection in mint/teal highlights, and cohesive question palette.
+5. `components/(Result)/ResultClient.tsx`:
+   - Score overview cards, accuracy metrics, and solution breakdown updated to
+     match the brand colors with mint correct answer badges.
+
+================================================================================
+END OF TEST SERIES MASTER MANUAL
+================================================================================

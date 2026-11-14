@@ -50,7 +50,7 @@ export default function TeacherShowcaseSection() {
                 href="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-full font-bold text-sm sm:text-base border border-white/30 text-white bg-white/5 hover:bg-white/15 backdrop-blur-sm transition-all duration-200 shadow-sm active:scale-95"
               >
-                Enquire now
+                Contact
               </Link>
             </div>
 

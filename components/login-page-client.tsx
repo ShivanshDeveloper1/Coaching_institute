@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { isFirebaseConfigured, signInWithGoogle } from "../lib/firebase/client";
+import { useAuth } from "@/context/AuthContext";
+import { isFirebaseConfigured } from "../lib/firebase/client";
 
 const benefits = [
   { value: "12+", label: "Courses" },
@@ -13,6 +14,7 @@ const benefits = [
 
 export function LoginPageClient() {
   const router = useRouter();
+  const { signInWithGoogle } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,30 +30,20 @@ export function LoginPageClient() {
       setLoading(true);
       setError("");
 
-      const result = await signInWithGoogle();
-      const payload = {
-        uid: result.user.uid,
-        email: result.user.email,
-        displayName: result.user.displayName,
-        photoURL: result.user.photoURL,
-      };
-
-      const response = await fetch("/api/auth/sync-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Unable to sync user data");
+      const user = await signInWithGoogle();
+      if (!user) {
+        throw new Error("Unable to complete Google sign-in.");
       }
 
-      router.push("/dashboard");
-    } catch (err) {
+      // If authorized admin, redirect to admin portal; otherwise redirect student to dashboard
+      if (user.isAdmin) {
+        router.push("/admin");
+      } else {
+        router.push("/dashboard");
+      }
+    } catch (err: any) {
       console.error(err);
-      setError("Google sign-in failed. Please check your Firebase configuration and try again.");
+      setError(err?.message || "Google sign-in failed. Please check your Firebase configuration and try again.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +63,7 @@ export function LoginPageClient() {
             </h1>
 
             <p className="mt-5 max-w-xl text-base text-white/75 sm:text-lg">
-              Access your student dashboard, academic progress, and admin tools from one secure
+              Access your student dashboard, academic progress, and test series from one secure
               place designed for modern coaching and learning.
             </p>
 
@@ -92,10 +84,10 @@ export function LoginPageClient() {
                 Explore courses
               </Link>
               <Link
-                href="/admin"
+                href="/test-series"
                 className="inline-flex items-center justify-center rounded-full bg-[#a8f0b0] px-5 py-3 text-sm font-semibold text-[#0c3d3d] transition hover:brightness-105"
               >
-                Open admin portal
+                View Test Series
               </Link>
             </div>
           </section>
@@ -103,7 +95,7 @@ export function LoginPageClient() {
           <aside className="rounded-[32px] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[var(--shadow)] sm:p-8">
             <div className="text-center">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[var(--green-700)]">
-                Student & admin login
+                Student & Member Login
               </p>
               <h2 className="mt-3 text-3xl font-black tracking-[-0.06em] text-[var(--ink)]">
                 Sign in to continue
@@ -141,8 +133,8 @@ export function LoginPageClient() {
                     03
                   </div>
                   <div>
-                    <div className="font-semibold text-[var(--ink)]">Fast admin access</div>
-                    <div className="text-sm text-[var(--ink-soft)]">Open the admin panel for daily operations.</div>
+                    <div className="font-semibold text-[var(--ink)]">Online test series</div>
+                    <div className="text-sm text-[var(--ink-soft)]">Participate in live mock tests and view instant results.</div>
                   </div>
                 </div>
               </div>
@@ -170,10 +162,10 @@ export function LoginPageClient() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <Link
-                href="/admin"
+                href="/test-series"
                 className="inline-flex items-center justify-center rounded-full bg-[var(--green-900)] px-4 py-3 text-sm font-semibold text-white transition hover:opacity-95"
               >
-                Admin access
+                Test Series
               </Link>
               <Link
                 href="/courses"

@@ -861,7 +861,7 @@ export default function AboutPage() {
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-4 rounded-full font-extrabold text-sm sm:text-base bg-[#88d89d] text-[#0c3d3d] hover:bg-[#a8f0b0] transition-all shadow-lg active:scale-95"
             >
-              Enquire now →
+              Contact Us →
             </Link>
             <Link
               href="/courses"

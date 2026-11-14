@@ -9,7 +9,7 @@ const testimonialsData = [
     id: 1,
     headline: "The concept clarity and daily practice tests made all the difference.",
     quote:
-      "ConceptNSolution helped me build rock-solid fundamentals in Physics and Chemistry. The faculty's mentorship gave me the confidence to secure a Top 500 AIR in JEE Advanced.",
+      "ConceptnSolution helped me build rock-solid fundamentals in Physics and Chemistry. The faculty's mentorship gave me the confidence to secure a Top 500 AIR in JEE Advanced.",
     studentName: "Abhinav Ahuja",
     courseRole: "JEE Advanced Aspirant (AIR 342)",
     tags: ["Physics", "JEE Prep"],
