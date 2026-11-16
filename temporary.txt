@@ -1,0 +1,89 @@
+================================================================================
+TEMPORARY PLANNING DOCUMENT: TEST SERIES ADMIN DASHBOARD, FRONTEND IMPROVEMENTS & SCIENCE FORMULA EDITOR
+================================================================================
+Date: 2026-11-15
+Status: IMPLEMENTATION COMPLETED & VERIFIED END-TO-END
+Target System: Coaching Institute Web Application (Next.js 16 + React 19 + Firebase + Tailwind CSS)
+
+================================================================================
+1. COMPLETED IMPLEMENTATION SUMMARY
+================================================================================
+All requirements from the user request and approved plan have been fully implemented:
+
+1. DUAL TEXT ENTRY MODES:
+   - "Normal Text Mode": Clean typing for standard sentences, paragraphs, and instructions.
+     Standard formatting tools: Bold (`**`), Italic (`*`), Underline (`__`).
+     Zero automatic conversion of ordinary text into formulas.
+   - "Formula Mode": Specialized science and mathematics studio with pre-built point-and-click templates
+     and live KaTeX preview.
+   - Simple, intuitive mode switcher pill: [ 📝 Normal Text ]   [ ⚛️ Formula Mode ].
+
+2. SCIENCE & MATHEMATICS DRAWERS (KaTeX-powered):
+   - Chemistry:
+     * Compounds: H₂O, CO₂, H₂SO₄, HCl, HNO₃, NH₃, CaCO₃, NaCl, NaOH, CH₄
+     * Arrows & States: → (Forward), ⇌ (Reversible equilibrium), ← (Reverse), ↔ (Resonance),
+       ↑ (Gas evolved), ↓ (Precipitate formed)
+     * Reaction Conditions: Heat (—[Δ]→), Catalyst (—[cat]→), Sunlight (—[hν]→),
+       Acid (—[H⁺]→), Base (—[OH⁻]→)
+     * Reaction Templates: 2H₂ + O₂ → 2H₂O, N₂ + 3H₂ ⇌ 2NH₃, CaCO₃ → CaO + CO₂↑
+     * Ions & Bonds: Fe³⁺, Cu²⁺, Na⁺, SO₄²⁻, OH⁻, Cl⁻, Single bond (-), Double bond (=), Triple bond (≡)
+   - Mathematics:
+     * Fractions & Roots: a/b (\frac{a}{b}), √x (\sqrt{x}), ⁿ√x (\sqrt[n]{x})
+     * Powers & Subscripts: x², xⁿ, 10⁻³, x₁, xₙ
+     * Calculus & Limits: ∫ f(x) dx, ∫ₐᵇ f(x) dx, ∑ xᵢ, lim (x→0), dy/dx, d²y/dx², ∞
+     * Operators & Relations: ±, ×, ÷, ≤, ≥, ≠, ≈, ∝, ∈
+     * Greek Alphabet: α, β, γ, δ, Δ, θ, λ, μ, π, σ, ω, Ω
+   - Physics:
+     * Vectors: v⃗, F⃗, a⃗, p⃗, E⃗, B⃗, î, ĵ, k̂
+     * Units: m/s, m/s², kg·m/s², N, J, W, Ω, μC, Hz, Pa, T
+     * Formulas & Constants: F⃗ = ma⃗, E = mc², Δt, h, c, G, ε₀, μ₀
+   - Biology:
+     * Genetics: F₁ generation, F₂ generation, Aa × aa, AA : Aa : aa, Iᴬ, Iᴮ, i
+     * Notations: ♂ (Male), ♀ (Female), μm, °C, Homo sapiens, E. coli
+
+3. DEDICATED PER-OPTION FORMULA TOOLBARS:
+   - Each option (A, B, C, D) in `QuestionForm.tsx` and `app/admin/edittestSeries/page.tsx` now has its
+     own compact toolbar strip directly above its input field.
+   - Quick formula chips (`x²`, `x₂`, `a/b`, `√x`, `→`, `⇌`) and expandable science drawer.
+   - Live KaTeX mini-preview renders below each option whenever formula content is present.
+
+4. IMAGE UPLOAD REMOVED FROM VISIBLE UI:
+   - Commented out question image upload button and preview in `QuestionForm.tsx`.
+   - Commented out option image upload buttons and preview in `QuestionForm.tsx`.
+   - Commented out question media asset upload block in `app/admin/edittestSeries/page.tsx`.
+   - All state signatures and data structures remain intact in memory without breaking quiz functionality.
+
+5. EXISTING ADMIN EDITOR (`app/admin/edittestSeries/page.tsx`) HARMONIZED:
+   - Upgraded question prompts, options (A-D), and explanations with `RichTextEditor`.
+   - Existing quizzes can now be edited with full scientific formula support.
+
+6. END-TO-END VERIFICATION:
+   - Multi-subject science quiz created and tested with Chemistry, Physics, Mathematics, and Biology questions.
+   - Verified that questions and options saved to the database are retrieved verbatim and parsed into valid
+     KaTeX MathML/HTML on the student-facing testing engine.
+
+================================================================================
+2. MODIFIED FILES AUDIT
+================================================================================
+1. `components/(admin)/(testseries)/CreateQuiz/RichTextEditor.tsx`:
+   - Dual-mode (Normal / Formula) architecture with interactive toggle.
+   - 4-subject science drawers (Chemistry, Mathematics, Physics, Biology) with one-click templates.
+   - Quick formula chips for rapid typing.
+   - Real-time KaTeX preview.
+   - Compact mode for options A-D.
+2. `components/(admin)/(testseries)/CreateQuiz/QuestionForm.tsx`:
+   - Commented out question & option image upload UI.
+   - Integrated `RichTextEditor` for question prompt, all 4 options, and explanation.
+   - Each option has its own dedicated toolbar directly above the input.
+3. `components/(admin)/(testseries)/CreateQuiz/QuestionList.tsx`:
+   - Renders live KaTeX preview for question statements, options A-D, and explanations in the review list.
+   - Updated CTA button to deep pine `#0c3d3d`.
+4. `components/(admin)/(testseries)/CreateQuiz/LatexText.tsx`:
+   - Added `import "katex/dist/katex.min.css"` for guaranteed styling in admin previews.
+5. `app/admin/edittestSeries/page.tsx`:
+   - Commented out image upload UI.
+   - Integrated `RichTextEditor` for question prompts, options, and explanations.
+
+================================================================================
+END OF PLANNING AND IMPLEMENTATION AUDIT
+================================================================================

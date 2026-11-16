@@ -45,8 +45,8 @@ export default function AboutPage() {
           "@type": "EducationalOrganization",
           name: "ConceptnSolution",
           alternateName: "Concept In Solution",
-          url: "https://conceptinsolution.com",
           telephone: "+91-98765-43210",
+          url: "https://conceptinsolution.com",
           email: "admissions@conceptinsolution.com",
           address: {
             "@type": "PostalAddress",

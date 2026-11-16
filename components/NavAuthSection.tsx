@@ -77,8 +77,8 @@ export function NavAuthSection() {
       </button>
 
       {/* Primary Call to Action */}
-      <Link href="/courses" className="btn btn-primary btn-small">
-        Conatct Us
+      <Link href="/dashboard" className="btn btn-primary btn-small">
+        Dashboard
       </Link>
 
       {/* User Dropdown Menu */}

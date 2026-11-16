@@ -1,6 +1,7 @@
 // components/admin/CreateQuiz/LatexText.tsx
 "use client";
 
+import "katex/dist/katex.min.css";
 import { isLatexBlock , renderLatex, splitLatexAndText} from "@/lib/utils/latexParser";
 interface LatexTextProps {
   text?: string | null;
