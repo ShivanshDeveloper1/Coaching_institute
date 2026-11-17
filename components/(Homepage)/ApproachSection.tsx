@@ -30,22 +30,22 @@ export default function ApproachSection() {
   ];
 
   return (
-    <section className="relative w-full bg-[#f2efe9] py-16 sm:py-20 lg:py-24">
+    <section className="relative w-full bg-[var(--bg)] py-16 sm:py-20 lg:py-24 border-t border-[var(--line)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
           className="mb-10 sm:mb-14"
         >
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[#1d5d53] mb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#1d5d53]" />
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-[var(--green-700)] bg-[var(--green-300)]/50 px-3.5 py-1 rounded-full mb-3 border border-[var(--green-700)]/15">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--green-700)]" />
             Our approach
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#172327] max-w-2xl leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--ink)] max-w-2xl leading-[1.12]">
             Essential features for modern academic success
           </h2>
         </motion.div>
@@ -59,28 +59,28 @@ export default function ApproachSection() {
             return (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: idx * 0.12 }}
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className={`rounded-[24px] p-7 sm:p-8 flex flex-col justify-between border shadow-sm transition-shadow duration-300 ${
+                transition={{ duration: 0.45, delay: idx * 0.1, ease: [0.23, 1, 0.32, 1] }}
+                whileHover={{ y: -4, transition: { duration: 0.2, ease: [0.23, 1, 0.32, 1] } }}
+                className={`rounded-[var(--radius)] p-7 sm:p-8 flex flex-col justify-between border shadow-sm hover:shadow-md transition-shadow duration-300 ${
                   isDark
-                    ? "bg-gradient-to-br from-[#0c3d3d] to-[#115350] text-white border-emerald-950/20 shadow-lg"
+                    ? "bg-gradient-to-br from-[var(--green-900)] to-[#115350] text-white border-white/10"
                     : isMint
-                    ? "bg-gradient-to-br from-[#d9f9d0] to-[#b4ec9b] text-[#172327] border-emerald-300/40"
-                    : "bg-gradient-to-b from-[#f7f8f5] to-white text-[#172327] border-black/5"
+                    ? "bg-gradient-to-br from-[#dcfce7] to-[#bbf7d0] text-[var(--ink)] border-emerald-300/60"
+                    : "bg-[var(--surface)] text-[var(--ink)] border-[var(--line)]"
                 }`}
               >
                 <div>
                   {/* Icon Box */}
                   <div
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold ${
+                    className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl font-bold transition-transform duration-200 group-hover:scale-105 ${
                       isDark
-                        ? "bg-white/10 text-[#a8f0b0]"
+                        ? "bg-white/10 text-[var(--green-500)]"
                         : isMint
-                        ? "bg-[#0c3d3d]/15 text-[#0c3d3d]"
-                        : "bg-[#0c3d3d]/10 text-[#0c3d3d]"
+                        ? "bg-[var(--green-900)]/15 text-[var(--green-900)]"
+                        : "bg-[var(--surface-soft)] text-[var(--green-900)] border border-[var(--line)]"
                     }`}
                   >
                     {feature.icon}
@@ -88,8 +88,8 @@ export default function ApproachSection() {
 
                   {/* Title */}
                   <h3
-                    className={`mt-6 text-2xl font-bold tracking-tight ${
-                      isDark ? "text-white" : "text-[#172327]"
+                    className={`mt-6 text-xl sm:text-2xl font-bold tracking-tight ${
+                      isDark ? "text-white" : "text-[var(--ink)]"
                     }`}
                   >
                     {feature.title}
@@ -98,7 +98,7 @@ export default function ApproachSection() {
                   {/* Description */}
                   <p
                     className={`mt-3 text-sm sm:text-base leading-relaxed ${
-                      isDark ? "text-white/80" : isMint ? "text-[#172327]/80" : "text-[#55656b]"
+                      isDark ? "text-white/80" : isMint ? "text-[var(--ink)]/80" : "text-[var(--ink-soft)]"
                     }`}
                   >
                     {feature.description}
@@ -106,13 +106,13 @@ export default function ApproachSection() {
                 </div>
 
                 {/* Link */}
-                <div className="mt-8 pt-2">
+                <div className="mt-7 pt-2">
                   <Link
                     href={feature.href}
                     className={`inline-flex items-center gap-1.5 text-sm font-bold transition-all group ${
                       isDark
-                        ? "text-[#a8f0b0] hover:text-white"
-                        : "text-[#0c3d3d] hover:text-[#1d5d53]"
+                        ? "text-[var(--green-500)] hover:text-white"
+                        : "text-[var(--green-800)] hover:text-[var(--green-900)]"
                     }`}
                   >
                     <span>Explore more</span>

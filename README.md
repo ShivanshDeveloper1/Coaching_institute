@@ -358,3 +358,6 @@ The next move should be:
 - Build the public homepage and course catalog
 
 If you want, I can now produce the exact implementation checklist for the first 7 days, or I can scaffold the actual project structure and starter files for you.
+
+
+<!-- npm manage package and npx execute the package -->

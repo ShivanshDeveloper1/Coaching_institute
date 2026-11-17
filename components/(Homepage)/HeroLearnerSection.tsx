@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const MARQUEE_TEXT =
@@ -8,37 +9,40 @@ const MARQUEE_TEXT =
 
 export default function HeroLearnerSection() {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#F7F4EB] text-[#14281D] flex flex-col items-center justify-between pt-12 pb-16 select-none font-sans">
+    <section className="relative min-h-[92vh] sm:min-h-screen w-full overflow-hidden bg-[var(--bg)] text-[var(--ink)] flex flex-col items-center justify-between pt-10 sm:pt-14 pb-12 sm:pb-16 select-none font-sans">
       
+      {/* Ambient background glow */}
+      <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 sm:w-[500px] sm:h-[500px] bg-[var(--green-300)]/30 rounded-full blur-3xl -z-10" />
+
       {/* ================= TOP HEADER CONTENT ================= */}
       <div className="relative z-20 flex flex-col items-center text-center px-4 max-w-3xl mx-auto">
         {/* Top Pill Badge */}
         <motion.div
-          initial={{ opacity: 0, y: -15 }}
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 bg-[#F5DCE0] text-[#4A252C] px-4 py-1.5 rounded-full text-xs md:text-sm font-medium mb-6 shadow-sm"
+          transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+          className="inline-flex items-center gap-2 bg-[#F5DCE0] text-[#4A252C] px-3.5 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold mb-5 sm:mb-6 shadow-sm border border-[#EAC2C8]"
         >
-          <span className="h-2 w-2 rounded-full bg-[#D85B72]" />
-         Flexible Online & Classroom Coaching
+          <span className="h-2 w-2 rounded-full bg-[#D85B72] animate-pulse" />
+          Flexible Online & Classroom Coaching
         </motion.div>
 
         {/* Main Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-4xl sm:text-6xl md:text-[68px] font-extrabold tracking-tight leading-[1.08] text-[#14281D]"
+          transition={{ duration: 0.5, delay: 0.08, ease: [0.23, 1, 0.32, 1] }}
+          className="text-4xl sm:text-6xl md:text-[68px] font-extrabold tracking-tight leading-[1.08] text-[var(--ink)]"
         >
           Coaching that fits
           <br />
-          <span className="inline-flex items-center justify-center gap-3 mt-1">
+          <span className="inline-flex items-center justify-center gap-2 sm:gap-3 mt-1">
             <span>the</span>
-            <span className="relative inline-block text-[#487556] -rotate-2">
+            <span className="relative inline-block text-[var(--green-800)] -rotate-2">
               Student
-              {/* Decorative Sparkle Lines on Top Right */}
+              {/* Decorative Sparkle Lines */}
               <svg
-                className="absolute -top-3 -right-7 w-7 h-7 text-[#E06D32]"
+                className="absolute -top-3 -right-6 sm:-right-7 w-6 h-6 sm:w-7 sm:h-7 text-[#E06D32]"
                 viewBox="0 0 32 32"
                 fill="none"
               >
@@ -49,7 +53,7 @@ export default function HeroLearnerSection() {
                   strokeLinecap="round"
                 />
               </svg>
-              {/* Hand-drawn Orange Underline */}
+              {/* Hand-drawn Terracotta Underline */}
               <svg
                 className="absolute -bottom-2.5 left-0 w-[108%] h-3 text-[#E06D32]"
                 viewBox="0 0 240 12"
@@ -67,24 +71,40 @@ export default function HeroLearnerSection() {
           </span>
         </motion.h1>
 
-        {/* CTA Buttons */}
-        <motion.div
+        {/* Subtitle / Value proposition */}
+        <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.25 }}
-          className="flex flex-wrap items-center justify-center gap-4 mt-9"
+          transition={{ duration: 0.45, delay: 0.16, ease: [0.23, 1, 0.32, 1] }}
+          className="mt-4 text-sm sm:text-base md:text-lg text-[var(--ink-soft)] max-w-xl font-medium"
         >
-          <button className="bg-[#E06D32] hover:bg-[#c95d26] text-white font-semibold text-sm md:text-base px-6 py-3 rounded-full shadow-md transition-transform active:scale-95">
-            Try a free Quizess
-          </button>
-          <button className="bg-[#F7F4EB] hover:bg-[#ebe6d8] text-[#14281D] font-semibold text-sm md:text-base px-6 py-3 rounded-full border-2 border-[#14281D] shadow-[0_3px_0_0_#14281D] hover:translate-y-[1px] hover:shadow-[0_2px_0_0_#14281D] transition-all">
+          Concept-first learning tailored to board excellence, foundation skills, and competitive success in Gurugram.
+        </motion.p>
+
+        {/* CTA Buttons */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.22, ease: [0.23, 1, 0.32, 1] }}
+          className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-7 sm:mt-8"
+        >
+          <Link
+            href="/test-series"
+            className="bg-[#E06D32] hover:bg-[#c95d26] text-white font-bold text-sm sm:text-base px-6 py-3 rounded-full shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg active:scale-95"
+          >
+            Try Free Quizzes
+          </Link>
+          <Link
+            href="/courses"
+            className="bg-[var(--surface)] hover:bg-[var(--bg-strong)] text-[var(--ink)] font-bold text-sm sm:text-base px-6 py-3 rounded-full border-2 border-[var(--ink)] shadow-[0_3px_0_0_var(--ink)] hover:translate-y-[1px] hover:shadow-[0_2px_0_0_var(--ink)] transition-all active:scale-95"
+          >
             Browse Courses
-          </button>
+          </Link>
         </motion.div>
       </div>
 
       {/* ================= VISUAL STAGE: RIBBON + 3 CARDS ================= */}
-      <div className="relative w-full max-w-[1440px] mx-auto mt-8 md:mt-4 h-[430px] sm:h-[480px] md:h-[520px] flex items-center justify-center">
+      <div className="relative w-full max-w-[1440px] mx-auto mt-6 sm:mt-8 md:mt-4 h-[380px] sm:h-[460px] md:h-[520px] flex items-center justify-center">
         
         {/* 1. ANIMATED GREEN CURVED RIBBON (Z-INDEX: 0 - BEHIND CARDS) */}
         <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center overflow-visible">
@@ -92,8 +112,7 @@ export default function HeroLearnerSection() {
             viewBox="0 0 1440 420"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[165%] sm:w-[130%] md:w-full h-auto overflow-visible"
-            // Subtle vertical wave breathing effect on the whole ribbon
+            className="w-[170%] sm:w-[130%] md:w-full h-auto overflow-visible"
             animate={{
               y: [0, -6, 0, 6, 0],
               rotate: [0, 0.4, 0, -0.4, 0],
@@ -105,25 +124,24 @@ export default function HeroLearnerSection() {
             }}
           >
             <defs>
-              {/* Cubic Bezier Path matching the exact S-wave in the reference */}
               <path
                 id="ribbonWavePath"
                 d="M -180 280 C 80 390, 310 170, 570 190 C 830 210, 910 350, 1180 210 C 1330 130, 1480 180, 1650 250"
               />
             </defs>
 
-            {/* Thick Green Background Stroke */}
+            {/* Green Background Stroke */}
             <use
               href="#ribbonWavePath"
-              stroke="#487556"
-              strokeWidth="40"
+              stroke="#1d5d53"
+              strokeWidth="42"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* Animated Text Moving Back and Forth Along the Path */}
+            {/* Animated Marquee Text */}
             <text
-              fill="#F7F4EB"
+              fill="#f4efe7"
               fontSize="16.5"
               fontWeight="600"
               letterSpacing="0.03em"
@@ -131,12 +149,11 @@ export default function HeroLearnerSection() {
             >
               <motion.textPath
                 href="#ribbonWavePath"
-                // Smoothly oscillates back and forth along the spline
                 animate={{
                   startOffset: ["0%", "-28%", "0%"],
                 }}
                 transition={{
-                  duration: 14,
+                  duration: 16,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -152,24 +169,24 @@ export default function HeroLearnerSection() {
           
           {/* --- LEFT CARD --- */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 40, rotate: -10 }}
+            initial={{ opacity: 0, scale: 0.85, y: 35, rotate: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0, rotate: -5 }}
             transition={{
               type: "spring",
-              stiffness: 120,
-              damping: 16,
-              delay: 0.2,
+              stiffness: 140,
+              damping: 18,
+              delay: 0.18,
             }}
-            whileHover={{ scale: 1.04, rotate: -2 }}
-            className="absolute left-[2%] sm:left-[6%] md:left-[5%] bottom-[6%] sm:bottom-[10%] w-[110px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
+            whileHover={{ scale: 1.05, rotate: -2, y: -4 }}
+            className="absolute left-[2%] sm:left-[6%] md:left-[5%] bottom-[8%] sm:bottom-[10%] w-[110px] sm:w-[155px] md:w-[185px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[var(--surface)] overflow-visible bg-[var(--surface-soft)] transition-shadow duration-200"
           >
             {/* Floating Smiley Sticker */}
             <motion.div
-              animate={{ y: [0, -6, 0], rotate: [-4, 6, -4] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-7 -right-3 sm:-top-9 sm:-right-5 z-20 w-10 h-10 sm:w-14 sm:h-14 bg-[#F6D5C1] rounded-full flex items-center justify-center shadow-sm border-2 border-[#F7F4EB]"
+              animate={{ y: [0, -5, 0], rotate: [-4, 6, -4] }}
+              transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-6 -right-3 sm:-top-8 sm:-right-4 z-20 w-9 h-9 sm:w-13 sm:h-13 bg-[#F6D5C1] rounded-full flex items-center justify-center shadow-md border-2 border-[var(--surface)]"
             >
-              <svg viewBox="0 0 36 36" className="w-5 h-5 sm:w-7 sm:h-7 text-[#14281D]">
+              <svg viewBox="0 0 36 36" className="w-5 h-5 sm:w-7 sm:h-7 text-[var(--ink)]">
                 <circle cx="13" cy="14" r="2.2" fill="currentColor" />
                 <circle cx="23" cy="14" r="2.2" fill="currentColor" />
                 <path
@@ -191,42 +208,42 @@ export default function HeroLearnerSection() {
 
           {/* --- CENTER MAIN CARD --- */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 50, rotate: 2 }}
-            animate={{ opacity: 1, scale: 1, y: 0, rotate: -3.5 }}
+            initial={{ opacity: 0, scale: 0.9, y: 40, rotate: 2 }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotate: -2 }}
             transition={{
               type: "spring",
-              stiffness: 110,
-              damping: 15,
+              stiffness: 130,
+              damping: 17,
               delay: 0.1,
             }}
-            whileHover={{ scale: 1.02, rotate: -1.5 }}
-            className="absolute left-1/2 -translate-x-1/2 top-[6%] sm:top-[4%] w-[190px] sm:w-[270px] md:w-[320px] aspect-[4/4.8] rounded-3xl shadow-2xl border-[5px] sm:border-[6px] border-[#F7F4EB] overflow-hidden bg-[#D5CFC0]"
+            whileHover={{ scale: 1.03, rotate: 0, y: -4 }}
+            className="absolute left-1/2 -translate-x-1/2 top-[4%] sm:top-[2%] w-[190px] sm:w-[270px] md:w-[325px] aspect-[4/4.8] rounded-3xl shadow-2xl border-[5px] sm:border-[6px] border-[var(--surface)] overflow-hidden bg-[var(--surface-soft)] transition-shadow duration-200"
           >
             <img
               src="/gurgaon_coaching_teacher.jpeg"
-              alt="Student holding books in library"
+              alt="Teacher with student in classroom"
               className="w-full h-full object-cover"
             />
           </motion.div>
 
           {/* --- RIGHT CARD --- */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 40, rotate: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0, rotate: -4 }}
+            initial={{ opacity: 0, scale: 0.85, y: 35, rotate: 8 }}
+            animate={{ opacity: 1, scale: 1, y: 0, rotate: 4 }}
             transition={{
               type: "spring",
-              stiffness: 120,
-              damping: 16,
-              delay: 0.3,
+              stiffness: 140,
+              damping: 18,
+              delay: 0.25,
             }}
-            whileHover={{ scale: 1.04, rotate: 0 }}
-            className="absolute right-[2%] sm:right-[6%] md:right-[6%] top-[12%] sm:top-[16%] w-[110px] sm:w-[155px] md:w-[180px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[#F7F4EB] overflow-visible bg-[#E5DEC9]"
+            whileHover={{ scale: 1.05, rotate: 2, y: -4 }}
+            className="absolute right-[2%] sm:right-[6%] md:right-[6%] top-[10%] sm:top-[14%] w-[110px] sm:w-[155px] md:w-[185px] aspect-[4/5] rounded-2xl shadow-xl border-4 border-[var(--surface)] overflow-visible bg-[var(--surface-soft)] transition-shadow duration-200"
           >
-            {/* Floating Green Clover/Blob Shape Behind Top-Left Corner */}
+            {/* Floating Organic Green Accent Shape */}
             <motion.div
-              animate={{ rotate: [0, 12, 0], scale: [1, 1.06, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-7 -left-6 -z-10 w-12 h-12 sm:w-14 sm:h-14 text-[#487556]"
+              animate={{ rotate: [0, 10, 0], scale: [1, 1.05, 1] }}
+              transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-6 -left-5 -z-10 w-11 h-11 sm:w-13 sm:h-13 text-[var(--green-700)]"
             >
               <svg viewBox="0 0 60 60" fill="currentColor">
                 <path d="M30 6C38 6 43 13 48 19C53 25 56 34 51 42C46 50 37 54 28 53C19 52 10 47 7 38C4 29 9 19 16 13C21 8 25 6 30 6Z" />

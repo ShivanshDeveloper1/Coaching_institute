@@ -852,10 +852,10 @@ export const courses: Course[] = [
 export const featuredCourses = courses.filter((course) => course.featured);
 
 export const stats = [
-  { value: '15+', label: 'Years of experience' },
-  { value: '20', label: 'Target admissions' },
-  { value: '100%', label: 'Concept-focused learning' },
-  { value: '₹34K', label: 'Board course fee' },
+  { value: '15+', label: 'Years of experience', shortLabel: 'Experience' },
+  { value: '20', label: 'Target admissions', shortLabel: 'Batch size' },
+  { value: '100%', label: 'Concept-focused learning', shortLabel: 'Concept focus' },
+  { value: '₹34K', label: 'Board course fee', shortLabel: 'Board fee' },
 ];
 
 export const instituteHighlights = [
