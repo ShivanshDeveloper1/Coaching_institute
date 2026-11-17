@@ -858,6 +858,19 @@ export const stats = [
   { value: '₹34K', label: 'Board course fee', shortLabel: 'Board fee' },
 ];
 
+export type NavItem = {
+  href: string;
+  label: string;
+};
+
+export const navItems: NavItem[] = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/courses", label: "Courses" },
+  { href: "/contact", label: "Contact" },
+  { href: "/test-series", label: "Test-Series" },
+];
+
 export const instituteHighlights = [
   'School education coaching',
   'Foundation programs',

@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { useUser, useAuth } from "@/context/AuthContext";
 import { User, LogOut, LayoutDashboard, Shield, BookOpen, ChevronDown } from "lucide-react";
 
-export function NavAuthSection() {
+interface NavAuthSectionProps {
+  showDashboardButton?: boolean;
+}
+
+export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionProps) {
   const { user, isLoaded, isAdmin } = useUser();
   const { logout } = useAuth();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -33,9 +37,9 @@ export function NavAuthSection() {
   // 1. Initial loading placeholder
   if (!isLoaded) {
     return (
-      <div className="nav-actions flex items-center gap-3">
-        <div className="w-9 h-9 rounded-full bg-slate-200/50 animate-pulse" />
-        <Link href="/courses" className="btn btn-primary btn-small">
+      <div className="nav-actions flex items-center gap-2 sm:gap-3">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-200/50 animate-pulse" />
+        <Link href="/courses" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
           Courses
         </Link>
       </div>
@@ -45,11 +49,11 @@ export function NavAuthSection() {
   // 2. Unauthenticated visitor: Show Login button
   if (!user) {
     return (
-      <div className="nav-actions flex items-center gap-3">
-        <Link href="/login" className="btn btn-secondary btn-small">
+      <div className="nav-actions flex items-center gap-2 sm:gap-3">
+        <Link href="/login" className="btn btn-secondary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
           Login
         </Link>
-        <Link href="/courses" className="btn btn-primary btn-small">
+        <Link href="/courses" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
           Courses
         </Link>
       </div>
@@ -62,24 +66,26 @@ export function NavAuthSection() {
   const initial = (firstName.charAt(0) || user.email?.charAt(0) || "U").toUpperCase();
 
   return (
-    <div className="nav-actions flex items-center gap-3 relative" ref={dropdownRef}>
+    <div className="nav-actions flex items-center gap-2 sm:gap-3 relative" ref={dropdownRef}>
       {/* User Avatar Circle with First Letter */}
       <button
         type="button"
         onClick={() => setDropdownOpen((prev) => !prev)}
-        className="flex items-center gap-2 p-1 rounded-full border border-emerald-600/30 bg-emerald-50/80 hover:bg-emerald-100/70 transition shadow-sm focus:outline-none"
+        className="flex items-center gap-1.5 sm:gap-2 p-1 rounded-full border border-emerald-600/30 bg-emerald-50/80 hover:bg-emerald-100/70 transition shadow-sm focus:outline-none"
         aria-label="User profile menu"
       >
-        <div className="w-9 h-9 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-base shadow-inner">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-sm sm:text-base shadow-inner">
           {initial}
         </div>
-        <ChevronDown size={14} className={`text-emerald-900 transition-transform duration-200 mr-1 ${dropdownOpen ? "rotate-180" : ""}`} />
+        <ChevronDown size={14} className={`text-emerald-900 transition-transform duration-200 mr-0.5 sm:mr-1 ${dropdownOpen ? "rotate-180" : ""}`} />
       </button>
 
-      {/* Primary Call to Action */}
-      <Link href="/dashboard" className="btn btn-primary btn-small">
-        Dashboard
-      </Link>
+      {/* Optional Primary Call to Action (hidden from main navbar, available if explicitly requested) */}
+      {showDashboardButton && (
+        <Link href="/dashboard" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
+          Dashboard
+        </Link>
+      )}
 
       {/* User Dropdown Menu */}
       {dropdownOpen && (
