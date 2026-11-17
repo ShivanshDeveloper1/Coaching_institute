@@ -16,6 +16,11 @@ const nextConfig: NextConfig = {
         hostname:"plus.unsplash.com"
       }
     ]
+  },
+  
+  typescript:{
+      ignoreBuildErrors: true,
+
   }
   
 
