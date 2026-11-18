@@ -161,7 +161,7 @@ export default function CoursesPage() {
             >
               <div className="relative rounded-[32px] overflow-hidden border-2 border-white/15 shadow-2xl bg-[#0c3d3d]">
                 <img
-                  src="/gurgaon_coaching_teacher.jpeg"
+                  src="/Teachers/TeacherInBlue.jpeg"
                   alt="Students engaged in structured classroom learning and problem solving"
                   className="w-full h-[360px] sm:h-[440px] lg:h-[480px] object-cover object-center"
                 />

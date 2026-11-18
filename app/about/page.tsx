@@ -195,7 +195,7 @@ export default function AboutPage() {
               <div className="relative rounded-[32px] overflow-hidden border-2 border-white/15 shadow-2xl bg-[#0c3d3d]">
                 <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3.4] w-full overflow-hidden">
                   <img
-                    src="https://images.unsplash.com/photo-1667655699558-8f1b362a67a8?q=80&w=1170&auto=format&fit=crop"
+                    src="/Teachers/TeacherJi.jpeg"
                     alt="Students at ConceptnSolution learning with structured notes and personal guidance"
                     className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                   />

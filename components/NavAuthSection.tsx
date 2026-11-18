@@ -37,23 +37,32 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
   // 1. Initial loading placeholder
   if (!isLoaded) {
     return (
-      <div className="nav-actions flex items-center gap-2 sm:gap-3">
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-200/50 animate-pulse" />
-        <Link href="/courses" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
+      <div className="flex items-center gap-2 sm:gap-3">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 animate-pulse border border-white/15" />
+        <Link 
+          href="/courses" 
+          className="inline-flex items-center justify-center px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] shadow-sm whitespace-nowrap"
+        >
           Courses
         </Link>
       </div>
     );
   }
 
-  // 2. Unauthenticated visitor: Show Login button
+  // 2. Unauthenticated visitor: Show Login & Courses button with high contrast
   if (!user) {
     return (
-      <div className="nav-actions flex items-center gap-2 sm:gap-3">
-        <Link href="/login" className="btn btn-secondary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
+      <div className="flex items-center gap-2 sm:gap-2.5">
+        <Link 
+          href="/login" 
+          className="inline-flex items-center justify-center px-3.5 sm:px-4 py-2 rounded-full font-bold text-xs sm:text-sm text-white/90 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all duration-200 active:scale-95 whitespace-nowrap"
+        >
           Login
         </Link>
-        <Link href="/courses" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
+        <Link 
+          href="/courses" 
+          className="inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-full font-extrabold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] hover:bg-[var(--green-300)] shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 whitespace-nowrap"
+        >
           Courses
         </Link>
       </div>
@@ -66,42 +75,45 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
   const initial = (firstName.charAt(0) || user.email?.charAt(0) || "U").toUpperCase();
 
   return (
-    <div className="nav-actions flex items-center gap-2 sm:gap-3 relative" ref={dropdownRef}>
+    <div className="flex items-center gap-2 sm:gap-3 relative" ref={dropdownRef}>
       {/* User Avatar Circle with First Letter */}
       <button
         type="button"
         onClick={() => setDropdownOpen((prev) => !prev)}
-        className="flex items-center gap-1.5 sm:gap-2 p-1 rounded-full border border-emerald-600/30 bg-emerald-50/80 hover:bg-emerald-100/70 transition shadow-sm focus:outline-none"
+        className="flex items-center gap-1.5 sm:gap-2 p-1 rounded-full border border-white/25 bg-white/10 hover:bg-white/20 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--green-500)]"
         aria-label="User profile menu"
       >
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-emerald-700 text-white font-extrabold flex items-center justify-center text-sm sm:text-base shadow-inner">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--green-500)] text-[var(--green-900)] font-black flex items-center justify-center text-xs sm:text-sm shadow-inner">
           {initial}
         </div>
-        <ChevronDown size={14} className={`text-emerald-900 transition-transform duration-200 mr-0.5 sm:mr-1 ${dropdownOpen ? "rotate-180" : ""}`} />
+        <ChevronDown size={14} className={`text-white/80 transition-transform duration-200 mr-0.5 sm:mr-1 ${dropdownOpen ? "rotate-180" : ""}`} />
       </button>
 
-      {/* Optional Primary Call to Action (hidden from main navbar, available if explicitly requested) */}
+      {/* Optional Primary Call to Action */}
       {showDashboardButton && (
-        <Link href="/dashboard" className="btn btn-primary btn-small text-xs sm:text-sm px-3 sm:px-4 py-1.5 whitespace-nowrap">
+        <Link 
+          href="/dashboard" 
+          className="inline-flex items-center justify-center px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] hover:bg-[var(--green-300)] shadow-md transition-all whitespace-nowrap"
+        >
           Dashboard
         </Link>
       )}
 
       {/* User Dropdown Menu */}
       {dropdownOpen && (
-        <div className="absolute right-0 top-12 mt-2 w-64 rounded-2xl bg-white border border-slate-200 shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-          <div className="px-4 py-3 border-b border-slate-100">
+        <div className="absolute right-0 top-12 mt-2 w-64 rounded-2xl bg-[var(--surface)] border border-[var(--line)] shadow-2xl py-2 z-50 text-[var(--ink)] animate-in fade-in slide-in-from-top-2 duration-150">
+          <div className="px-4 py-3 border-b border-[var(--line)]">
             <div className="flex items-center gap-2">
-              <span className="font-bold text-slate-900 text-sm truncate">
+              <span className="font-extrabold text-[var(--ink)] text-sm truncate">
                 {user.displayName || "Student"}
               </span>
               {isAdmin && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-100 text-amber-800">
+                <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
                   ADMIN
                 </span>
               )}
             </div>
-            <p className="text-xs text-slate-500 truncate mt-0.5">{user.email}</p>
+            <p className="text-xs text-[var(--ink-soft)] font-medium truncate mt-0.5">{user.email}</p>
           </div>
 
           <div className="py-1">
@@ -109,9 +121,9 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
               <Link
                 href="/admin"
                 onClick={() => setDropdownOpen(false)}
-                className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-amber-700 hover:bg-amber-50 transition"
+                className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-bold text-amber-800 hover:bg-amber-50 transition"
               >
-                <Shield size={16} className="text-amber-600" />
+                <Shield size={16} className="text-amber-700" />
                 Admin Panel
               </Link>
             )}
@@ -119,27 +131,27 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
             <Link
               href="/dashboard"
               onClick={() => setDropdownOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition"
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-soft)] transition"
             >
-              <LayoutDashboard size={16} className="text-slate-500" />
+              <LayoutDashboard size={16} className="text-[var(--green-700)]" />
               My Dashboard
             </Link>
 
             <Link
               href="/test-series"
               onClick={() => setDropdownOpen(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition"
+              className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-semibold text-[var(--ink)] hover:bg-[var(--surface-soft)] transition"
             >
-              <BookOpen size={16} className="text-slate-500" />
+              <BookOpen size={16} className="text-[var(--green-700)]" />
               Test Series
             </Link>
           </div>
 
-          <div className="border-t border-slate-100 pt-1">
+          <div className="border-t border-[var(--line)] pt-1">
             <button
               type="button"
               onClick={handleLogout}
-              className="flex w-full items-center gap-2.5 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition"
+              className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm font-bold text-red-600 hover:bg-red-50 transition"
             >
               <LogOut size={16} />
               Sign Out

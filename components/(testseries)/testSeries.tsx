@@ -12,9 +12,13 @@ import {
   ClipboardList, 
   GraduationCap,
   Languages,
-  BookOpen // Added for the Class filter icon
+  BookOpen,
+  ArrowRight,
+  Sparkles,
+  HelpCircle
 } from "lucide-react";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Configuration for Exam Types
 const getCategoryConfig = (examType: string) => {
@@ -25,7 +29,7 @@ const getCategoryConfig = (examType: string) => {
       return {
         label: "All Exams",
         icon: Layers,
-        activeClass: "bg-[#0c3d3d] border-[#0c3d3d] text-white shadow-md ring-2 ring-[#1d5d53] ring-offset-2 ring-offset-white",
+        activeClass: "bg-[var(--green-900)] border-[var(--green-900)] text-white shadow-md ring-2 ring-[var(--green-600)] ring-offset-2 ring-offset-[var(--bg)]",
         inactiveClass: "bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--green-700)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]",
         iconColor: "text-[var(--green-700)]"
       };
@@ -33,25 +37,25 @@ const getCategoryConfig = (examType: string) => {
       return {
         label: "NEET",
         icon: Dna,
-        activeClass: "bg-[#0d4f4f] border-[#0d4f4f] text-white shadow-md ring-2 ring-[#88d89d] ring-offset-2 ring-offset-white",
+        activeClass: "bg-[var(--green-900)] border-[var(--green-900)] text-white shadow-md ring-2 ring-[var(--green-500)] ring-offset-2 ring-offset-[var(--bg)]",
         inactiveClass: "bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--green-700)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]",
-        iconColor: "text-[#1d5d53]"
+        iconColor: "text-[var(--green-700)]"
       };
     case "JEE":
       return {
         label: "JEE",
         icon: Atom,
-        activeClass: "bg-[#1d5d53] border-[#1d5d53] text-white shadow-md ring-2 ring-[#a8f0b0] ring-offset-2 ring-offset-white",
+        activeClass: "bg-[var(--green-900)] border-[var(--green-900)] text-white shadow-md ring-2 ring-[var(--green-500)] ring-offset-2 ring-offset-[var(--bg)]",
         inactiveClass: "bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--green-700)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]",
-        iconColor: "text-[#1d5d53]"
+        iconColor: "text-[var(--green-700)]"
       };
     default:
       return {
         label: examType,
         icon: ClipboardList,
-        activeClass: "bg-[#0c3d3d] border-[#0c3d3d] text-white shadow-md ring-2 ring-[#88d89d] ring-offset-2 ring-offset-white",
+        activeClass: "bg-[var(--green-900)] border-[var(--green-900)] text-white shadow-md ring-2 ring-[var(--green-600)] ring-offset-2 ring-offset-[var(--bg)]",
         inactiveClass: "bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--green-700)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]",
-        iconColor: "text-[#1d5d53]"
+        iconColor: "text-[var(--green-700)]"
       };
   }
 };
@@ -235,7 +239,7 @@ const TestSeries = () => {
                     onClick={() => setActiveClassFilter(className)}
                     className={`group flex items-center justify-between gap-2 px-4 py-2 rounded-xl border text-xs font-bold transition-all duration-200 select-none hover:-translate-y-0.5 ${
                       isActive 
-                        ? "bg-[#0c3d3d] border-[#0c3d3d] text-white shadow-sm ring-2 ring-[#a8f0b0] ring-offset-2 ring-offset-white" 
+                        ? "bg-[var(--green-900)] border-[var(--green-900)] text-white shadow-sm ring-2 ring-[var(--green-500)] ring-offset-2 ring-offset-[var(--bg)]" 
                         : "bg-[var(--surface)] border-[var(--line)] text-[var(--ink-soft)] hover:border-[var(--green-700)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)]"
                     }`}
                   >
@@ -258,19 +262,26 @@ const TestSeries = () => {
       {/* QUIZ LIST GRID */}
       <div className="space-y-6">
         {filteredQuizzes.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
-            {filteredQuizzes.map((item: any) => {
+          <motion.div 
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+          >
+            {filteredQuizzes.map((item: any, idx: number) => {
               const isLive = item.createdAt ? now >= new Date(item.createdAt) : true;
               const isFrozen = item.isLocked === true;
 
               return (
-                <div
-                  key={item._id}
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05, duration: 0.3 }}
+                  key={item.id || item._id}
                   className={`group relative bg-[var(--surface)] rounded-[var(--radius)] border transition-all duration-300 flex flex-col ${
                     isFrozen
                       ? "border-[var(--line)] bg-[var(--surface-soft)] opacity-75"
                       : isLive
-                        ? "border-[var(--line)] hover:border-[var(--green-600)] hover:-translate-y-1 hover:shadow-[var(--shadow)]"
+                        ? "border-[var(--line)] hover:border-[var(--green-600)] hover:-translate-y-1.5 hover:shadow-[var(--shadow)]"
                         : "border-[var(--line)] bg-[var(--surface-soft)] opacity-80"
                   }`}
                 >
@@ -308,19 +319,37 @@ const TestSeries = () => {
                           <Languages size={11} className="text-[var(--green-700)]" />
                           {item.language || "English"}
                         </span>
-                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-[var(--surface-soft)] text-[var(--ink)] uppercase border border-[var(--line)] tracking-wide">
+                        <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg bg-[var(--green-300)] text-[var(--green-900)] uppercase border border-[var(--line)] tracking-wide">
                           {item.examType || "Mock Test"}
                         </span>
                       </div>
                     </div>
 
-                    <h3 className={`text-lg font-bold mb-3 leading-snug transition-colors duration-200 line-clamp-2 ${isFrozen ? 'text-[var(--ink-soft)]' : 'text-[var(--ink)] group-hover:text-[var(--green-900)]'}`}>
+                    <h3 className={`text-lg font-bold mb-2 leading-snug transition-colors duration-200 line-clamp-2 ${isFrozen ? 'text-[var(--ink-soft)]' : 'text-[var(--ink)] group-hover:text-[var(--green-900)]'}`}>
                       {item.title}
                     </h3>
 
+                    {item.overview && (
+                      <p className="text-xs text-[var(--ink-soft)] line-clamp-2 mb-4 font-normal leading-relaxed">
+                        {item.overview}
+                      </p>
+                    )}
+
+                    {/* Question and Subject stats chips */}
+                    <div className="flex items-center gap-2 mb-4 text-xs font-semibold text-[var(--ink-soft)]">
+                      <span className="inline-flex items-center gap-1 bg-[var(--surface-soft)] px-2.5 py-1 rounded-md border border-[var(--line)]">
+                        <BookOpen size={12} className="text-[var(--green-700)]" />
+                        <strong className="text-[var(--ink)]">{item.questions?.length || 0}</strong> Questions
+                      </span>
+                      <span className="inline-flex items-center gap-1 bg-[var(--surface-soft)] px-2.5 py-1 rounded-md border border-[var(--line)]">
+                        <Clock size={12} className="text-[var(--green-700)]" />
+                        <strong className="text-[var(--ink)]">{item.duration || 60}</strong> Mins
+                      </span>
+                    </div>
+
                     {/* Added mt-auto to push the bottom sections down for equal height cards */}
                     <div className="mt-auto pt-2">
-                      <div className="flex items-center text-xs font-semibold text-[var(--ink-soft)] mb-5 bg-[var(--surface-soft)] w-fit px-3 py-1.5 rounded-lg border border-[var(--line)]">
+                      <div className="flex items-center text-xs font-semibold text-[var(--ink-soft)] mb-4 bg-[var(--surface-soft)] w-fit px-3 py-1.5 rounded-lg border border-[var(--line)]">
                         <Clock size={13} className="mr-1.5 text-[var(--green-700)]" />
                         <span>
                           {isLive ? "Started: " : "Unlocks: "} 
@@ -338,11 +367,11 @@ const TestSeries = () => {
                         </button>
                       ) : isLive ? (
                         <Link
-                          href={`/test-series/${item._id}`}
-                          className="w-full flex items-center justify-center gap-2 bg-[#0c3d3d] hover:bg-[#0d4f4f] text-white py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 text-sm font-bold tracking-wide active:scale-[0.99]"
+                          href={`/test-series/${item.id || item._id}`}
+                          className="w-full flex items-center justify-center gap-2 bg-[var(--green-900)] hover:bg-[var(--green-800)] text-white py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 text-sm font-bold tracking-wide active:scale-[0.99] group/btn"
                         >
-                          <Eye size={16} />
-                          Start Test Now
+                          <span>Start Test Now</span>
+                          <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
                         </Link>
                       ) : (
                         <div className="w-full flex items-center justify-center gap-2 bg-[var(--surface-soft)] text-[var(--ink-soft)] py-3 rounded-xl text-sm font-bold border border-[var(--line)] cursor-not-allowed">
@@ -352,19 +381,19 @@ const TestSeries = () => {
                       )}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         ) : (
-          <div className="py-20 flex flex-col items-center justify-center bg-gray-50/40 rounded-3xl border-2 border-dashed border-gray-200 max-w-xl mx-auto">
-            <div className="p-4 bg-gray-100 rounded-2xl mb-4 text-gray-400 border border-gray-200/40">
+          <div className="py-20 flex flex-col items-center justify-center bg-[var(--surface-soft)] rounded-3xl border-2 border-dashed border-[var(--line)] max-w-xl mx-auto">
+            <div className="p-4 bg-[var(--surface)] rounded-2xl mb-4 text-[var(--ink-soft)] border border-[var(--line)]">
               <ClipboardList size={32} />
             </div>
-            <h4 className="text-base font-bold text-gray-800 mb-1">No Tests Available</h4>
-            <p className="text-gray-500 text-sm font-medium text-center px-4">
+            <h4 className="text-base font-bold text-[var(--ink)] mb-1">No Tests Available</h4>
+            <p className="text-[var(--ink-soft)] text-sm font-medium text-center px-4">
               We couldn't find any tests matching <br/>
-              <span className="text-red-500 font-bold">{activeFilter}</span> and <span className="text-indigo-500 font-bold">{activeClassFilter}</span>.
+              <span className="text-[var(--green-800)] font-bold">{activeFilter}</span> and <span className="text-[var(--green-700)] font-bold">{activeClassFilter}</span>.
             </p>
           </div>
         )}

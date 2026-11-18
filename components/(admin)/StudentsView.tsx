@@ -116,10 +116,10 @@ export function StudentsView({ initialStudents }: StudentsViewProps) {
   };
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 max-w-7xl mx-auto space-y-8 bg-[var(--bg)] min-h-screen text-[var(--ink)]">
+    <div className="p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 max-w-7xl 2xl:max-w-[1500px] mx-auto space-y-8 bg-[var(--bg)] min-h-screen text-[var(--ink)]">
       
       {/* Header & Subtitle */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--line)] pb-6 pt-3 sm:pt-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--green-800)] mb-1">
             <span>Admin Portal</span>
