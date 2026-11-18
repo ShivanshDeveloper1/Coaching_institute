@@ -16,7 +16,8 @@ import {
   Phone,
   Mail,
   MapPin,
-  CheckCircle2
+  CheckCircle2,
+  User
 } from "lucide-react";
 import { NavAuthSection } from "./NavAuthSection";
 import { navItems } from "@/app/site-data";
@@ -59,15 +60,15 @@ export function SiteShell({ children }: { children: ReactNode }) {
     <div className="page-shell min-h-screen flex flex-col bg-[var(--bg)] text-[var(--ink)]">
       {/* Top Navigation Bar: Rich Dark Emerald Slate with Pure White text */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-[#0a3333]/95 border-b border-white/10 shadow-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex items-center justify-between py-2.5 sm:py-3 px-3 sm:px-6 lg:px-8">
           
           {/* Brand Logo with Original Logo Image */}
           <Link
             href="/"
-            className="flex items-center gap-3 font-bold group flex-shrink-0"
+            className="flex items-center gap-2 sm:gap-2.5 font-bold group flex-shrink-0 min-w-0"
             aria-label="ConceptnSolution Home"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white/10 p-0.5 border border-white/20 shadow-sm group-hover:scale-105 transition-transform flex items-center justify-center overflow-hidden">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-full bg-white/10 p-0.5 border border-white/20 shadow-sm group-hover:scale-105 transition-transform flex items-center justify-center overflow-hidden flex-shrink-0">
               <img
                 src="/logo-11.png"
                 alt="ConceptNSolution"
@@ -75,11 +76,11 @@ export function SiteShell({ children }: { children: ReactNode }) {
               />
             </div>
 
-            <div className="flex flex-col">
-              <span className="text-lg sm:text-xl font-extrabold tracking-tight text-white leading-tight group-hover:text-[var(--green-300)] transition-colors">
+            <div className="flex flex-col min-w-0">
+              <span className="text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-white leading-tight group-hover:text-[var(--green-300)] transition-colors truncate">
                 ConceptNSolution
               </span>
-              <span className="text-[10px] sm:text-[11px] font-bold text-white/70 uppercase tracking-[0.14em]">
+              <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-white/70 uppercase tracking-[0.12em] sm:tracking-[0.14em]">
                 Academy • Gurugram
               </span>
             </div>
@@ -179,22 +180,36 @@ export function SiteShell({ children }: { children: ReactNode }) {
                     Student Portal
                   </div>
 
-                  {/* Dashboard link */}
-                  <Link
-                    href="/dashboard"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-extrabold transition-all shadow-sm ${
-                      pathname === "/dashboard"
-                        ? "bg-[var(--green-500)] text-[var(--green-900)] ring-2 ring-white/30"
-                        : "bg-white/15 text-white hover:bg-white/20 border border-white/15"
-                    }`}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <LayoutDashboard className="w-5 h-5 text-[var(--green-300)]" />
-                      Dashboard
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-white" />
-                  </Link>
+                  {/* Dashboard link for logged-in students or Login link */}
+                  {isLoaded && user ? (
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-extrabold transition-all shadow-sm ${
+                        pathname === "/dashboard"
+                          ? "bg-[var(--green-500)] text-[var(--green-900)] ring-2 ring-white/30"
+                          : "bg-white/15 text-white hover:bg-white/20 border border-white/15"
+                      }`}
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <LayoutDashboard className="w-5 h-5 text-[var(--green-300)]" />
+                        Dashboard
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-white" />
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/login"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center justify-between px-4 py-3 rounded-xl text-base font-extrabold bg-[var(--green-500)] text-[var(--green-900)] shadow-sm hover:bg-[var(--green-300)] transition-all"
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <User className="w-5 h-5 text-[var(--green-900)]" />
+                        Login to Portal
+                      </span>
+                      <ArrowRight className="w-4 h-4 text-[var(--green-900)]" />
+                    </Link>
+                  )}
 
                   {/* Admin Panel link */}
                   {isLoaded && user && isUserAdmin && (

@@ -37,35 +37,19 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
   // 1. Initial loading placeholder
   if (!isLoaded) {
     return (
-      <div className="flex items-center gap-2 sm:gap-3">
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 animate-pulse border border-white/15" />
-        <Link 
-          href="/courses" 
-          className="inline-flex items-center justify-center px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] shadow-sm whitespace-nowrap"
-        >
-          Courses
-        </Link>
-      </div>
+      <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 animate-pulse border border-white/15 flex-shrink-0" />
     );
   }
 
-  // 2. Unauthenticated visitor: Show Login & Courses button with high contrast
+  // 2. Unauthenticated visitor: Simple, clean Login button
   if (!user) {
     return (
-      <div className="flex items-center gap-2 sm:gap-2.5">
-        <Link 
-          href="/login" 
-          className="inline-flex items-center justify-center px-3.5 sm:px-4 py-2 rounded-full font-bold text-xs sm:text-sm text-white/90 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 backdrop-blur-sm transition-all duration-200 active:scale-95 whitespace-nowrap"
-        >
-          Login
-        </Link>
-        <Link 
-          href="/courses" 
-          className="inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-full font-extrabold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] hover:bg-[var(--green-300)] shadow-md hover:shadow-lg transition-all duration-200 active:scale-95 whitespace-nowrap"
-        >
-          Courses
-        </Link>
-      </div>
+      <Link 
+        href="/login" 
+        className="inline-flex items-center justify-center px-4 sm:px-5 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm text-white bg-white/15 hover:bg-white/25 border border-white/25 backdrop-blur-sm transition-all duration-200 active:scale-95 whitespace-nowrap shadow-xs hover:border-white/40 flex-shrink-0"
+      >
+        Login
+      </Link>
     );
   }
 
@@ -75,7 +59,7 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
   const initial = (firstName.charAt(0) || user.email?.charAt(0) || "U").toUpperCase();
 
   return (
-    <div className="flex items-center gap-2 sm:gap-3 relative" ref={dropdownRef}>
+    <div className="flex items-center gap-2 sm:gap-3 relative flex-shrink-0" ref={dropdownRef}>
       {/* User Avatar Circle with First Letter */}
       <button
         type="button"
@@ -83,21 +67,11 @@ export function NavAuthSection({ showDashboardButton = false }: NavAuthSectionPr
         className="flex items-center gap-1.5 sm:gap-2 p-1 rounded-full border border-white/25 bg-white/10 hover:bg-white/20 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--green-500)]"
         aria-label="User profile menu"
       >
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--green-500)] text-[var(--green-900)] font-black flex items-center justify-center text-xs sm:text-sm shadow-inner">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[var(--green-500)] text-[var(--green-900)] font-black flex items-center justify-center text-xs sm:text-sm shadow-inner flex-shrink-0">
           {initial}
         </div>
         <ChevronDown size={14} className={`text-white/80 transition-transform duration-200 mr-0.5 sm:mr-1 ${dropdownOpen ? "rotate-180" : ""}`} />
       </button>
-
-      {/* Optional Primary Call to Action */}
-      {showDashboardButton && (
-        <Link 
-          href="/dashboard" 
-          className="inline-flex items-center justify-center px-4 py-2 rounded-full font-bold text-xs sm:text-sm bg-[var(--green-500)] text-[var(--green-900)] hover:bg-[var(--green-300)] shadow-md transition-all whitespace-nowrap"
-        >
-          Dashboard
-        </Link>
-      )}
 
       {/* User Dropdown Menu */}
       {dropdownOpen && (
