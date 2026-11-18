@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { SiteShell } from "../components/site-shell";
 import { AuthProvider } from "@/context/AuthContext";
+import WhatsAppButton from "@/components/WhatsAppButton"
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -29,7 +30,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className={plusJakarta.className}>
         <AuthProvider>
-          <SiteShell>{children}</SiteShell>
+          <SiteShell>
+            < WhatsAppButton />
+            {children}
+
+          </SiteShell>
         </AuthProvider>
       </body>
     </html>
